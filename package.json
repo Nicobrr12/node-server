@@ -1,5 +1,24 @@
 {
+  "name": "copia-tareas-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lista.js",
   "dependencies": {
-    "colors": "^1.4.0"
-  }
+    "colors": "^1.4.0",
+    "nodemon": "^3.0.1"
+  },
+  "scripts": {
+    "dev": "nodemon lista.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nicobrr12/node-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nicobrr12/node-server/issues"
+  },
+  "homepage": "https://github.com/Nicobrr12/node-server#readme"
 }

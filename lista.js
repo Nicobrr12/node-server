@@ -1,96 +1,93 @@
-const readline = require('readline');
-const colors = require('colors')
+const readline = require('node:readline');
+const colors =require("colors")
+
+let listaDeTareas = [{
+    id: "1",
+    descripcion: "Entrenamiento Micro futbol",
+    estaCompletada: false
+},
+{
+    id: "2",
+    descripcion: "Ir al gym",
+    estaCompletada: false 
+}];
+
+function mostrarTareas (){
+    console.log(listaDeTareas);
+}
+
+function agregarTarea(id, descripcion){
+
+    let nuevaTarea = {
+        id:id,
+        descripcion: descripcion,
+        estaCompletada: false
+    };
+    listaDeTareas.push(nuevaTarea);
+};
+
+
+
+function eliminarTarea (id) {
+    listaDeTareas = listaDeTareas.filter(tarea => tarea.id !== id )
+};
+
+
+    
+function completarTarea ( id ) {
+
+    let tareaCompletada = listaDeTareas.find(tarea => tarea.id === id);
+
+    if(tareaCompletada) {
+        tareaCompletada.estaCompletada = true;
+    } else {
+        console.log('La tarea no se encuentra en la lista'.red);
+    }
+};
+
+
+
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
-const tareas = [];
+rl.question('\nLISTA DE TAREAS \n\nElige una opcion :\n\n1 Listar tareas  \n2 añadir tarea \n3 completar tarea, \n4 Eliminar tarea'.green, (respuesta) => {
+     console.log(`Haz elegido ${respuesta}`.yellow)
 
-function agregarTarea() {
-  rl.question('Descripción de la tarea: ', (descripcion) => {
-    tareas.push({
-      descripcion,
-      completada: false
-    });
-    console.log('Tarea añadida con éxito.'.green);
-    mostrarMenu();
-  });
-}
-
-function eliminarTarea() {
-  mostrarTareas();
-  rl.question('Número de tarea a eliminar: ', (numeroTarea) => {
-    const indice = parseInt(numeroTarea) - 1;
-    if (indice >= 0 && indice < tareas.length) {
-      tareas.splice(indice, 1);
-      console.log('Tarea eliminada con éxito.'.green);
-    } else {
-      console.log('Número de tarea no válido.'.red);
-    }
-    mostrarMenu();
-  });
-}
-
-function completarTarea() {
-  mostrarTareas();
-  rl.question('Número de tarea a marcar como completada: ', (numeroTarea) => {
-    const indice = parseInt(numeroTarea) - 1;
-    if (indice >= 0 && indice < tareas.length) {
-      tareas[indice].completada = true;
-      console.log('Tarea marcada como completada.'.green);
-    } else {
-      console.log('Número de tarea no válido.'.red);
-    }
-    mostrarMenu();
-  });
-}
-
-function listarTareas() {
-  mostrarTareas();
-  mostrarMenu();
-}
-
-function mostrarTareas() {
-  if (tareas.length === 0) {
-    console.log('No hay tareas registradas.'.red);
-  } else {
-    console.log('Lista de tareas:');
-    tareas.forEach((tarea, index) => {
-      const estado = tarea.completada ? 'Completada'.green : 'Pendiente'.red;
-      console.log(`${index + 1}. [${estado}] ${tarea.descripcion}`);
-    });
-  }
-}
-
-function mostrarMenu() {
-  rl.question(
-    '\nSelecciona una opción:\n1. Añadir tarea\n2. Eliminar tarea\n3. Completar tarea\n4. Listar tareas\n5. Salir\n'.yellow,
-    (opcion) => {
-      switch (opcion) {
+     switch (respuesta) {
         case '1':
-          agregarTarea();
-          break;
-        case '2':
-          eliminarTarea();
-          break;
+            console.log(mostrarTareas())
+            break;
+            case '2':
+                rl.question('Ingrese el ID de la nueva tarea: ', (id) => {
+                    rl.question('Ingrese la descripción de la nueva tarea: ', (descripcion) => {
+                        rl.question('¿La tarea está completada? (true/false): ', (estaCompletada) => {
+                            agregarTarea(id, descripcion, estaCompletada === 'false');
+                            console.log('Tarea agregada '.green);
+                            rl.close();
+                        });
+                    });
+                });
+            break;
         case '3':
-          completarTarea();
-          break;
+            rl.question('ingrese el numero de id  '.green, (id)=> {
+                completarTarea( id );
+                console.log('Tarea completada '.green);
+                rl.close();
+            });
+            break;
         case '4':
-          listarTareas();
-          break;
-        case '5':
-          rl.close();
-          break;
-        default:
-          console.log('Opción no válida.'.red);
-          mostrarMenu();
-      }
-    }
-  );
-}
-
-console.log('Bienvenido a tu LISTA DE TAREAS'.yellow);
-mostrarMenu()
+            rl.question('ingrese el numero de id  '.green, (id)=> {
+                eliminarTarea( id );
+                console.log('Tarea borrada'.green);
+                rl.close();            
+           });
+           break;
+           default:
+            console.log('Opcion invalida'.red);
+            rl.close();
+            break;
+      
+    }});

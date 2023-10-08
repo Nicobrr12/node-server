@@ -2,15 +2,18 @@ const express = require('express');
 const app = express();
 const port = 8000;
 
+
+
+
 let listaDeTareas = [
   {
     id: "1",
-    descripcion: "sacar al perro",
+    descripcion: "Campeonato Piña",
     estaCompletada: false
   },
   {
     id: "2",
-    descripcion: "pagar la luz",
+    descripcion: "Sintetica en la bombonera",
     estaCompletada: false
   }
 ];
